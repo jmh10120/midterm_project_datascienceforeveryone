@@ -132,11 +132,11 @@ if selected == "02 Data Visualisation":
 
         # Customize the plot
         ax.set_xlabel("Posts Per Day")  # Posts Per Day on x-axis
-        ax.set_ylabel("Daily Usage Time")  # Age on y-axis
-        ax.set_title("Posts Per Day vs Daily Usage Time")
+        ax.set_ylabel("Minutes Spent")  # Age on y-axis
+        ax.set_title("Posts Per Day vs Minutes Spent")
 
         # Display the plot in Streamlit
-        st.markdown("### Scatterplot: Posts Per Day vs Daily Usage Time")
+        st.markdown("### Scatterplot: Posts Per Day vs Minutes Spent")
         st.pyplot(fig)
 
         st.markdown("""
@@ -202,9 +202,9 @@ if selected == "03 Predictions":
     # Plot Actual vs Predicted graph
     fig, ax = plt.subplots(figsize=(8, 6))  # Create a figure and axis
     sns.scatterplot(x=y_test, y=predictions, alpha=0.5, ax=ax)  # Scatter plot
-    ax.set_xlabel("Actual Daily Usage Time (minutes)")  # X-axis label
-    ax.set_ylabel("Predicted Daily Usage Time (minutes)")  # Y-axis label
-    ax.set_title("Actual vs Predicted Daily Usage Time")  # Plot title
+    ax.set_xlabel("Actual Minutes Spent")  # X-axis label
+    ax.set_ylabel("Predicted Minutes Spent")  # Y-axis label
+    ax.set_title("Actual vs Predicted Minutes Spent")  # Plot title
     ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], color='red', lw=2, ls='-')  # Red line for perfect predictions
     st.pyplot(fig)  # Display the plot
     
@@ -214,12 +214,12 @@ if selected == "03 Predictions":
     # In the first column, display predictions table
     with col1:
         st.markdown("### Predictions")
-        st.write(pd.DataFrame(predictions, columns=["Predicted Daily Usage Time (minutes)"]))
+        st.write(pd.DataFrame(predictions, columns=["Predicted Minutes Spent"]))
 
     # In the second column, display actual values table
     with col2:
         st.markdown("### Actual Values")
-        st.write(pd.DataFrame(y_test.values, columns=["Actual Daily Usage Time (minutes)"]))
+        st.write(pd.DataFrame(y_test.values, columns=["Actual Minutes Spent"]))
 
 
 if selected == "04 Conclusion":
