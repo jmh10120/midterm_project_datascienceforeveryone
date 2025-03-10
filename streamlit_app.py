@@ -207,9 +207,6 @@ if selected == "03 Predictions":
     ax.set_title("Actual vs Predicted Daily Usage Time")  # Plot title
     ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], color='red', lw=2, ls='-')  # Red line for perfect predictions
     st.pyplot(fig)  # Display the plot
-
-    # Display the MAE
-    st.write(f"**Mean Absolute Error (MAE):** {mae:.2f}")
     
     # Create two columns for side-by-side display of predictions and actual values
     col1, col2 = st.columns(2)
