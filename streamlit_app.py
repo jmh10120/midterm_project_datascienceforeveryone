@@ -161,33 +161,57 @@ for element in testList:
     df[element] = label_encoder.fit_transform(df[element])
 
 if selected == "03 Predictions":
+   if selected == "03 Predictions":
     from sklearn.model_selection import train_test_split
     ### Step 1: Split dataset into X and y
     X = df.drop(columns=["Daily_Usage_Time (minutes)"])  # remove columns
     y = df["Daily_Usage_Time (minutes)"]  # correct quotation mark
 
     ### Step2 : split between train and test set
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     from sklearn.linear_model import LinearRegression
     ### Step3 : Initialise the linear regression
     linear = LinearRegression()
 
     ### Step4 : Training of the model
-    linear.fit(X_train,y_train)
+    linear.fit(X_train, y_train)
 
     ### Step5 : Make some prediction on a chunk of the dataset that the model hasn't seen before
     predictions = linear.predict(X_test)
 
     ### Step6 : Evaluation of the model output
-    from sklearn.metrics import mean_absolute_error
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+    # Compute Mean Absolute Error (MAE)
     mae = mean_absolute_error(predictions, y_test)
 
-    ### Final step : Print the performance of the model and the predictions
-    st.markdown("### :grey[Mean Absolute Error]")
-    st.write("Mean Absolute Error is equal to ",mae)
+    # Compute Mean Squared Error (MSE)
+    mse = mean_squared_error(predictions, y_test)
 
-    # Create two columns for side-by-side display
+    # Compute R-squared (R²)
+    r2 = r2_score(y_test, predictions)
+
+    # Display the metrics
+    st.markdown("### :grey[Evaluation Metrics]")
+
+    st.write(f"**Mean Absolute Error (MAE):** {mae}")
+    st.write(f"**Mean Squared Error (MSE):** {mse}")
+    st.write(f"**R-squared (R²):** {r2}")
+
+    # Plot Actual vs Predicted graph
+    fig, ax = plt.subplots(figsize=(8, 6))  # Create a figure and axis
+    sns.scatterplot(x=y_test, y=predictions, alpha=0.5, ax=ax)  # Scatter plot
+    ax.set_xlabel("Actual Daily Usage Time (minutes)")  # X-axis label
+    ax.set_ylabel("Predicted Daily Usage Time (minutes)")  # Y-axis label
+    ax.set_title("Actual vs Predicted Daily Usage Time")  # Plot title
+    ax.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], color='red', lw=2, ls='-')  # Red line for perfect predictions
+    st.pyplot(fig)  # Display the plot
+
+    # Display the MAE
+    st.write(f"**Mean Absolute Error (MAE):** {mae:.2f}")
+    
+    # Create two columns for side-by-side display of predictions and actual values
     col1, col2 = st.columns(2)
 
     # In the first column, display predictions table
@@ -209,3 +233,4 @@ if selected == "04 Conclusion":
                 - Co-authored posts 
                 - Interactive post features beyond comments (Q&As, live streaming, or games) 
                 """)
+    st.image("meme.jpg")
